@@ -15,6 +15,7 @@ dependencies = [
   "python-dotenv",
   "fastapi>=0.115.0",
   "uvicorn[standard]>=0.30.0",
+  "requests>=2.32.5",
 ]
 
 [project.scripts]
