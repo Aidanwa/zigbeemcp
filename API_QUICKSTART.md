@@ -7,7 +7,7 @@
 On your Raspberry Pi, navigate to the project directory and install dependencies:
 
 ```bash
-cd ~/smarthome  # or wherever you cloned zigbeemcp
+cd ~/zigbeemcp  # or wherever you cloned zigbeemcp
 uv sync
 ```
 
