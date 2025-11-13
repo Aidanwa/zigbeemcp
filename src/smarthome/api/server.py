@@ -1,11 +1,32 @@
 """FastAPI server main entry point."""
 import logging
+import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
+
+# Load .env file from project root (walk up from src/smarthome/api/server.py)
+# This handles the case where the project is in /home/adams/smarthome or similar
+env_path = Path(__file__).parent.parent.parent.parent / ".env"
+if env_path.exists():
+    load_dotenv(env_path, override=True)
+    print(f"[DEBUG] Loaded .env from: {env_path}")
+else:
+    # Fallback: try loading from current working directory
+    load_dotenv(override=True)
+    print(f"[DEBUG] .env not found at {env_path}, tried loading from current directory")
+
+# Debug: Print API_KEYS status
+api_keys_loaded = os.getenv("API_KEYS")
+if api_keys_loaded:
+    print(f"[DEBUG] API_KEYS loaded successfully (length: {len(api_keys_loaded)})")
+else:
+    print(f"[DEBUG] WARNING: API_KEYS not found in environment!")
 
 from .config import get_config
 from .routes import router
