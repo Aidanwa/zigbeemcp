@@ -74,10 +74,10 @@ curl -H "X-API-Key: your-very-secret-api-key-here" \
 
 # Get device state
 curl -H "X-API-Key: your-very-secret-api-key-here" \
-  http://localhost:8000/api/devices/AidanBedroom1
+  http://localhost:8000/api/devices/Bedroom1
 
 # Toggle a light
-curl -X POST http://localhost:8000/api/devices/AidanBedroom1/set \
+curl -X POST http://localhost:8000/api/devices/Bedroom1/set \
   -H "X-API-Key: your-very-secret-api-key-here" \
   -H "Content-Type: application/json" \
   -d '{"state": "TOGGLE"}'
@@ -90,7 +90,7 @@ uv run scripts/test_api.py --api-key your-very-secret-api-key-here --full
 
 # Toggle a specific device
 uv run scripts/test_api.py --api-key your-very-secret-api-key-here \
-  --device AidanBedroom1 --toggle
+  --device Bedroom1 --toggle
 ```
 
 ## Common Operations
@@ -99,19 +99,19 @@ uv run scripts/test_api.py --api-key your-very-secret-api-key-here \
 
 ```bash
 # Turn on with full brightness
-curl -X POST http://localhost:8000/api/devices/AidanBedroom1/set \
+curl -X POST http://localhost:8000/api/devices/Bedroom1/set \
   -H "X-API-Key: YOUR_KEY" \
   -H "Content-Type: application/json" \
   -d '{"state": "ON", "brightness": 254}'
 
 # Set warm color temperature
-curl -X POST http://localhost:8000/api/devices/AidanBedroom1/set \
+curl -X POST http://localhost:8000/api/devices/Bedroom1/set \
   -H "X-API-Key: YOUR_KEY" \
   -H "Content-Type: application/json" \
   -d '{"color_temp": 400}'
 
 # Dim with 2-second transition
-curl -X POST http://localhost:8000/api/devices/AidanBedroom1/set \
+curl -X POST http://localhost:8000/api/devices/Bedroom1/set \
   -H "X-API-Key: YOUR_KEY" \
   -H "Content-Type: application/json" \
   -d '{"brightness": 50, "transition": 2.0}'
@@ -126,7 +126,7 @@ curl -H "X-API-Key: YOUR_KEY" \
 
 # Get events for specific device
 curl -H "X-API-Key: YOUR_KEY" \
-  "http://localhost:8000/api/events?device=AidanBedroom1&limit=20"
+  "http://localhost:8000/api/events?device=Bedroom1&limit=20"
 ```
 
 ### Bridge Operations
