@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adams-smart-home"
+version = "0.1.0"
+description = "Zigbee smart-home"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Aidan Adams" }]
+
+dependencies = [
+  "paho-mqtt",
+  "python-dotenv",
+]
+
+[project.scripts]
+smart-logger = "smarthome.tracker.logger:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

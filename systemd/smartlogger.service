@@ -1,0 +1,25 @@
+# /etc/systemd/system/smartlogger.service
+[Unit]
+Description=Smart Home - Logger
+Wants=network-online.target
+After=network-online.target mosquitto.service
+
+[Service]
+WorkingDirectory=/home/adams/smarthome
+User=adams
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=-/home/adams/smarthome/.env
+
+# Use venv python to run the logger module that uv installed (editable)
+ExecStart=/home/adams/smarthome/.venv/bin/python -m smarthome.tracker.logger
+
+Restart=always
+RestartSec=2
+StartLimitIntervalSec=30
+StartLimitBurst=10
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
