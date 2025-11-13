@@ -1,6 +1,6 @@
-# /etc/systemd/system/smartlogger.service
+# /etc/systemd/system/smartserver.service
 [Unit]
-Description=Smart Home - Logger
+Description=Smart Home - API Server
 Wants=network-online.target
 After=network-online.target mosquitto.service
 
@@ -10,8 +10,8 @@ User=adams
 Environment=PYTHONUNBUFFERED=1
 EnvironmentFile=-/home/adams/zigbeemcp/.env
 
-# Use venv python to run the logger module that uv installed (editable)
-ExecStart=/home/adams/zigbeemcp/.venv/bin/python -m smarthome.tracker.logger
+# Use venv python to run the API server
+ExecStart=/home/adams/zigbeemcp/.venv/bin/python -m smarthome.api.server
 
 Restart=always
 RestartSec=2

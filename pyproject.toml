@@ -13,10 +13,13 @@ authors = [{ name = "Aidan Adams" }]
 dependencies = [
   "paho-mqtt",
   "python-dotenv",
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.30.0",
 ]
 
 [project.scripts]
 smart-logger = "smarthome.tracker.logger:main"
+smart-server = "smarthome.api.server:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
