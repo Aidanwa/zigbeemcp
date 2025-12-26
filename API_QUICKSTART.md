@@ -53,6 +53,9 @@ sudo systemctl start smartserver
 # Check status
 sudo systemctl status smartserver
 sudo journalctl -u smartserver -f
+
+# Restart after code changes
+sudo systemctl restart smartserver
 ```
 
 ### 4. Test the API

@@ -44,6 +44,7 @@ class MqttBus:
         self._topic_handlers: Dict[str, MsgHandler] = {}
         self._wait_by_key: Dict[str, tuple[str, JsonObj]] = {}
         self._one_shot: Dict[str, JsonObj] = {}
+        self._state_cache: Dict = {}
 
         self.client.connect(MQTT_HOST, MQTT_PORT, keepalive=60)
         self.client.loop_start()
@@ -61,6 +62,11 @@ class MqttBus:
     def _on_message(self, c, u, msg: mqtt.MQTTMessage):
         topic = msg.topic
         payload = _try_json(msg.payload)
+
+        # Cache device state topics (not bridge topics)
+        if topic.startswith(Z2M_BASE) and "/bridge/" not in topic:
+            with self._lock:
+                self._state_cache[topic] = payload
 
         # exact-topic handlers first
         with self._lock:
@@ -87,6 +93,11 @@ class MqttBus:
             # wait_for one-shot by topic
             if topic in self._one_shot:
                 self._one_shot[topic] = payload
+
+    def get_cached(self, topic: str) -> Optional[JsonObj]:
+        """Return cached state for a topic, or None if not yet received."""
+        with self._lock:
+            return self._state_cache.get(topic)
 
     # ---- public API ----
     def publish_json(self, topic: str, obj: Optional[JsonObj] = None, *, qos: int = 0, retain: bool = False) -> None:

@@ -126,13 +126,18 @@ class DeviceController:
             DeviceTimeoutError: If unable to get state within timeout
         """
         state_topic = f"{Z2M_BASE}/{friendly_name}"
+        
+        # Return cached state if available
+        state = self.bus.get_cached(state_topic)
+        if state:
+            return state
+        
+        # Fall back to waiting for next message
         state = self.bus.wait_for(state_topic, timeout=timeout)
-
         if not state:
             raise DeviceTimeoutError(
                 f"Timeout getting state for device '{friendly_name}' after {timeout}s"
             )
-
         return state
 
     def list_devices(self, timeout: float = 2.0) -> list[JsonObj]:
